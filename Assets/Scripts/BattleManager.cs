@@ -46,6 +46,16 @@ public class BattleManager : MonoBehaviour {
 
         if (end) return;
 
+        //ボス撃破でMenuSceneに遷移
+        if (boss) {
+            if (!MenuManager.FirstBossAlive) {
+                end = true;
+                boss = false;
+                finishText.text = "VICTORY!";
+                StartCoroutine("BackMenuScene");
+            }
+        }
+
         //体力0でMenuSceneに遷移
         if (playerStatus.HelthPoint <= 0) {
             end = true;
@@ -53,7 +63,7 @@ public class BattleManager : MonoBehaviour {
             StartCoroutine("BackMenuScene");
         }
 
-        if (boss) return;
+        if (boss) return;　//ボス戦は時間制限なし
 
         //残り時間0でMenuSceneに遷移
         if (time <= 0) {

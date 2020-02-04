@@ -21,6 +21,7 @@ public class SkeletonController : MonoBehaviour {
         //HP0の処理
         if (monsterStatus.HelthZero()) {
             animator.SetTrigger("SkeletonDieTrigger");
+            MenuManager.FirstBossAlive = false;
             return;
         }
 

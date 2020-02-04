@@ -18,22 +18,10 @@ public class PlayerModel {
         exp = 0;
         maxHp = 100;
         hp = maxHp;
-        atk = 30;
-        def = 30;
-        mag = 30;
-        sp = 30;
+        atk = 10;
+        def = 10;
+        mag = 10;
+        sp = 10;
         bp = 0;
     }
-
-    /*public PlayerModel(int lv, int exp, int maxHp, int atk, int def, int mag, int sp, int bp) {
-        this.lv = lv;
-        this.exp = exp;
-        this.maxHp = maxHp;
-        this.hp = maxHp;
-        this.atk = atk;
-        this.def = def;
-        this.mag = mag;
-        this.sp = sp;
-        this.bp = bp;
-    }*/
 }
