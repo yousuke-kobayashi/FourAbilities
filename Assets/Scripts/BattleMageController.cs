@@ -4,6 +4,7 @@ using UnityEngine;
 public class BattleMageController : MonoBehaviour {
     public GameObject iceBombPrefab;
     public GameObject staff;
+    public GameObject flameBurstPrefab;
 
     PlayerStatus playerStatus;
     BattleManager battleManager;
@@ -60,6 +61,13 @@ public class BattleMageController : MonoBehaviour {
         if (BattleManager.AttackClick && !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")) {
             animator.SetTrigger("MageAttackTrigger");
         }
+        //スキル
+        if (BattleManager.SkillClick &&
+            !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") &&
+            !animator.GetCurrentAnimatorStateInfo(0).IsName("Skill"))
+        {
+            animator.SetTrigger("MageSkillTrigger");
+        }
     }
 
     public void Hit() {  //AnimationEvent
@@ -67,6 +75,11 @@ public class BattleMageController : MonoBehaviour {
         GameObject iceBomb = Instantiate(iceBombPrefab) as GameObject;
         iceBomb.transform.position = pos.transform.position;
         iceBomb.transform.rotation = Quaternion.Euler(new Vector3(0, transform.localEulerAngles.y, 0));
+    }
+
+    public void SkillHit() {
+        GameObject flameBurst = Instantiate(flameBurstPrefab) as GameObject;
+        flameBurst.transform.position = new Vector3(transform.position.x, 1, transform.position.z + 10);
     }
 
     public void FootR() { }  //AnimationEvent

@@ -27,13 +27,13 @@ public class MenuManager : MonoBehaviour {
         playerStatus = player.GetComponent<PlayerStatus>();
 
         statusArray.Clear();
-
+        //各ステータスをリストに追加
         statusArray.Add(playerStatus.AttackValue);
         statusArray.Add(playerStatus.DeffenceValue);
         statusArray.Add(playerStatus.MagicValue);
         statusArray.Add(playerStatus.SpeedValue);
-        //ステータスの最大値
-        max = statusArray.Max();
+       
+        max = statusArray.Max();　//ステータスの最大値
 
         Destroy(player);
     }
@@ -49,8 +49,6 @@ public class MenuManager : MonoBehaviour {
         } else if (Num() == 3) {
             player = Instantiate(playerPrefab[3]) as GameObject;
         }
-        Debug.Log(max);
-        Debug.Log(statusArray[0]);
     }
 
     void Update() {
@@ -69,7 +67,6 @@ public class MenuManager : MonoBehaviour {
             bossButton.interactable = true;
         }
         else {
-            //BossButtonを無効化
             bossButton.interactable = false;
         }
     }

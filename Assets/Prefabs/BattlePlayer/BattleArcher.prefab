@@ -898,7 +898,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1436351234371562}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -10.333758, y: -0.0000012104825, z: -10.154264}
   m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
   m_Children:
   - {fileID: 4247954614126196}
@@ -1840,6 +1840,8 @@ MonoBehaviour:
   arrowPrefab: {fileID: 1528642471571008, guid: 1fe4ae1e75d95a542b370b1b403f7153,
     type: 2}
   bow: {fileID: 1368399085241404}
+  windArrowPrefab: {fileID: 1912319482243528, guid: cacf929e6b52cc148a73a607baf059b8,
+    type: 2}
 --- !u!124 &124912453158116870
 Behaviour:
   m_ObjectHideFlags: 1

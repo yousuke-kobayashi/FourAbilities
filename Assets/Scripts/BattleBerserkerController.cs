@@ -3,20 +3,23 @@ using UnityEngine;
 
 public class BattleBerserkerController : MonoBehaviour {
     PlayerStatus playerStatus;
+    BattleManager battleManager;
     Animator animator;
     GameObject attackArea;
-    BattleManager battleManager;
+    GameObject skillArea;
 
     float moveSpeed = 1.0f;  //前進速度
     float angleSpeed = 100.0f;　//回転速度
 
     void Start() {
         playerStatus = GetComponent<PlayerStatus>();
+        battleManager = GameObject.Find("BattleManager").GetComponent<BattleManager>();
         animator = GetComponent<Animator>();
         attackArea = GameObject.Find("AttackArea");
-        battleManager = GameObject.Find("BattleManager").GetComponent<BattleManager>();
+        skillArea = GameObject.Find("SkillArea");
 
         attackArea.SetActive(false);
+        skillArea.SetActive(false);
     }
 
     void Update() {
@@ -57,6 +60,13 @@ public class BattleBerserkerController : MonoBehaviour {
         if (BattleManager.AttackClick && !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")) {
             animator.SetTrigger("BerserkerAttackTrigger");
         }
+        //スキル
+        if (BattleManager.SkillClick &&
+            !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") &&
+            !animator.GetCurrentAnimatorStateInfo(0).IsName("Skill"))
+        {
+            animator.SetTrigger("BerserkerSkillTrigger");
+        }
     }
 
     public void Hit() {  //AnimationEvent
@@ -64,6 +74,13 @@ public class BattleBerserkerController : MonoBehaviour {
     }
     public void HitOut() {  //AnimationEvent
         attackArea.SetActive(false);
+    }
+
+    public void SkillHit() {
+        skillArea.SetActive(true);
+    }
+    public void SkillHitOut() {
+        skillArea.SetActive(false);
     }
 
     public void FootR() { }  //AnimationEvent

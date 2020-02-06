@@ -10,6 +10,7 @@ public class BallController : MonoBehaviour {
         playerStatus = player[0].GetComponent<PlayerStatus>();
     }
 
+    //ボールを取ったら各能力が上昇
     public void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.tag == "Player") {
             if (tag == "BallRed") {

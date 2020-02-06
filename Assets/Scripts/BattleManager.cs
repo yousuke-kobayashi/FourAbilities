@@ -19,7 +19,7 @@ public class BattleManager : MonoBehaviour {
     bool boss = false;
 
     void Awake() {
-        if (MenuManager.Num() == 0) {
+        /*if (MenuManager.Num() == 0) {
             player = Instantiate(playerPrefab[0]) as GameObject;
         } else if (MenuManager.Num() == 1) {
             player = Instantiate(playerPrefab[1]) as GameObject;
@@ -27,7 +27,8 @@ public class BattleManager : MonoBehaviour {
             player = Instantiate(playerPrefab[2]) as GameObject;
         } else if (MenuManager.Num() == 3) {
             player = Instantiate(playerPrefab[3]) as GameObject;
-        }
+        }*/
+        player = Instantiate(playerPrefab[0]) as GameObject;
     }
 
     void Start() {

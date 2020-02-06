@@ -4,6 +4,7 @@ using UnityEngine;
 public class BattleArcherController : MonoBehaviour {
     public GameObject arrowPrefab;
     public GameObject bow;
+    public GameObject windArrowPrefab;
 
     PlayerStatus playerStatus;
     BattleManager battleManager;
@@ -39,7 +40,6 @@ public class BattleArcherController : MonoBehaviour {
             animator.SetBool("ArcherRun", false);
         }
         //後退
-
         if (BattleManager.BackClick) {
             animator.SetBool("ArcherBack", true);
             animator.SetBool("ArcherRun", false);
@@ -60,6 +60,13 @@ public class BattleArcherController : MonoBehaviour {
         if (BattleManager.AttackClick && !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")) {
             animator.SetTrigger("ArcherAttackTrigger");
         }
+        //スキル
+        if (BattleManager.SkillClick &&
+            !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") &&
+            !animator.GetCurrentAnimatorStateInfo(0).IsName("Skill"))
+        {
+            animator.SetTrigger("ArcherSkillTrigger");
+        }
     }
 
     public void Hit() {  //AnimationEvent
@@ -67,6 +74,11 @@ public class BattleArcherController : MonoBehaviour {
         GameObject arrow = Instantiate(arrowPrefab) as GameObject;
         arrow.transform.position = new Vector3(pos.transform.position.x, 1.5f, pos.transform.position.z);
         arrow.transform.rotation = Quaternion.Euler(new Vector3(0, transform.localEulerAngles.y, 0));
+    }
+
+    public void SkillHit() {
+        GameObject windArrow = Instantiate(windArrowPrefab) as GameObject;
+        windArrow.transform.position = new Vector3(transform.position.x, 1, transform.position.z + 10);
     }
 
     public void FootR() { }  //AnimationEvent

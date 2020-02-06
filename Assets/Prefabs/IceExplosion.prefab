@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114077141525125868}
   m_Layer: 0
   m_Name: IceExplosion
-  m_TagString: AttackArea
+  m_TagString: MageAttackArea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

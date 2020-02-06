@@ -16,6 +16,7 @@ public class BonusManager : MonoBehaviour {
     float timeLag = 0;
 
     void Awake() {
+        //能力に応じてPlayerを生成
         if (MenuManager.Num() == 0) {
             player = Instantiate(playerPrefab[0]) as GameObject;
         }

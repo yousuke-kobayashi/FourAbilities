@@ -3,20 +3,24 @@ using UnityEngine;
 
 public class BattleKnightController : MonoBehaviour {
     PlayerStatus playerStatus;
+    BattleManager battleManager;
     Animator animator;
     GameObject attackArea;
-    BattleManager battleManager;
+    GameObject skillArea;
+
 
     float moveSpeed = 1.0f;  //前進速度
     float angleSpeed = 100.0f;　//回転速度
 
     void Start () {
         playerStatus = GetComponent<PlayerStatus>();
+        battleManager = GameObject.Find("BattleManager").GetComponent<BattleManager>();
         animator = GetComponent<Animator>();
         attackArea = GameObject.Find("AttackArea");
-        battleManager = GameObject.Find("BattleManager").GetComponent<BattleManager>();
+        skillArea = GameObject.Find("SkillArea");
 
         attackArea.SetActive(false);
+        skillArea.SetActive(false);
     }
 	
 	void Update () {
@@ -54,8 +58,18 @@ public class BattleKnightController : MonoBehaviour {
             transform.Rotate(Vector3.up * angleSpeed * Time.deltaTime);
         }
         //攻撃
-        if (BattleManager.AttackClick && !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")) {
+        if (BattleManager.AttackClick &&
+            !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") &&
+            !animator.GetCurrentAnimatorStateInfo(0).IsName("Skill"))
+        {
             animator.SetTrigger("KnightAttackTrigger");
+        }
+        //スキル
+        if (BattleManager.SkillClick &&
+            !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") &&
+            !animator.GetCurrentAnimatorStateInfo(0).IsName("Skill"))
+        {
+            animator.SetTrigger("KnightSkillTrigger");
         }
     }
 
@@ -64,6 +78,13 @@ public class BattleKnightController : MonoBehaviour {
     }
     public void HitOut() {  //AnimationEvent
         attackArea.SetActive(false);
+    }
+
+    public void SkillHit() {
+        skillArea.SetActive(true);
+    }
+    public void SkillHitOut() {
+        skillArea.SetActive(false);
     }
 
     public void FootR() { }  //AnimationEvent

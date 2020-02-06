@@ -43,9 +43,11 @@ public class SlimeController : MonoBehaviour {
 
     public void OnTriggerEnter(Collider other) {
         //攻撃範囲内で攻撃されるとダメージを受ける
-        if (other.gameObject.tag == "AttackArea" && !monsterStatus.HelthZero()) {
-            animator.SetTrigger("SlimeDamageTrigger");
-            monsterStatus.MonsterHelthDecrease();
+        if (!monsterStatus.HelthZero()) {
+            if (other.gameObject.tag == "AttackArea") {
+                animator.SetTrigger("SlimeDamageTrigger");
+                monsterStatus.MonsterHelthDecrease();
+            }
         }
     }
 
