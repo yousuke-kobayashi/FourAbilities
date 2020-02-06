@@ -7,11 +7,10 @@ public class BattleKnightController : MonoBehaviour {
     GameObject attackArea;
     BattleManager battleManager;
 
-    float z;
-    float moveSpeed = 5.0f;  //前進速度
+    float moveSpeed = 1.0f;  //前進速度
     float angleSpeed = 100.0f;　//回転速度
 
-	void Start () {
+    void Start () {
         playerStatus = GetComponent<PlayerStatus>();
         animator = GetComponent<Animator>();
         attackArea = GameObject.Find("AttackArea");
@@ -23,49 +22,49 @@ public class BattleKnightController : MonoBehaviour {
 	void Update () {
         if (battleManager.EndJudge()) {
             //動きを止める
-            z = 0;
-            animator.SetBool("RunBool", false);
-            animator.SetBool("BackBool", false);
+            animator.SetBool("KnightRun", false);
+            animator.SetBool("KnightBack", false);
             return;
         }
-
-        //上下キーの入力値を読み取る
-        z = Input.GetAxis("Vertical") * Time.deltaTime * (moveSpeed + playerStatus.SpeedValue * 5 / 100);
-
-        //前進と後退と停止
-        if (z > 0) {
-            animator.SetBool("RunBool", true);
-            animator.SetBool("BackBool", false);
-            transform.position += transform.forward * z;
-        } else if (z < 0) {
-            animator.SetBool("BackBool", true);
-            animator.SetBool("RunBool", false);
-            transform.position += transform.forward * z * 0.3f;
-        } else if (z == 0) {
-            animator.SetBool("RunBool", false);
-            animator.SetBool("BackBool", false);
+        
+        //前進
+        if (BattleManager.GoClick) {
+            animator.SetBool("KnightRun", true);
+            animator.SetBool("KnightBack", false);
+            transform.position += transform.forward * Time.deltaTime * (moveSpeed + playerStatus.SpeedValue * 5 / 100);
         }
-
-        //回転
-        float x = Input.GetAxisRaw("Horizontal") * Time.deltaTime * angleSpeed;
-        transform.Rotate(Vector3.up * x);
-
+        if (!BattleManager.GoClick) {
+            animator.SetBool("KnightRun", false);
+        }
+        //後退
+        if (BattleManager.BackClick) {
+            animator.SetBool("KnightBack", true);
+            animator.SetBool("KnightRun", false);
+            transform.position -= transform.forward * 0.7f * Time.deltaTime * (moveSpeed + playerStatus.SpeedValue * 5 / 100);
+        }
+        if (!BattleManager.BackClick) {
+            animator.SetBool("KnightBack", false);
+        }
+        //左回転
+        if (BattleManager.LeftClick) {
+            transform.Rotate(Vector3.up * -angleSpeed * Time.deltaTime);
+        }
+        //右回転
+        if (BattleManager.RightClick) {
+            transform.Rotate(Vector3.up * angleSpeed * Time.deltaTime);
+        }
         //攻撃
-        if (Input.GetKeyDown(KeyCode.Space) && 
-            !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-        {
-            animator.SetTrigger("AttackTrigger");
+        if (BattleManager.AttackClick && !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")) {
+            animator.SetTrigger("KnightAttackTrigger");
         }
     }
 
     public void Hit() {  //AnimationEvent
         attackArea.SetActive(true);
     }
-
     public void HitOut() {  //AnimationEvent
         attackArea.SetActive(false);
     }
-
 
     public void FootR() { }  //AnimationEvent
     public void FootL() { }  //AnimationEvent

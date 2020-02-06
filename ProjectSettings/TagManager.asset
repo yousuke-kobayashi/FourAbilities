@@ -6,12 +6,13 @@ TagManager:
   tags:
   - DamageArea
   - AttackArea
-  - Slime
   - BallRed
   - BallYellow
   - BallBlue
   - BallGreen
   - Floor
+  - Monster
+  - Wall
   layers:
   - Default
   - TransparentFX

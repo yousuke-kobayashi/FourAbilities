@@ -2,35 +2,37 @@
 using UnityEngine;
 
 public class BonusKnightController : MonoBehaviour {
+    PlayerStatus playerStatus;
+    BonusManager bonusManager;
     Vector3 angle;
     Animator animator;
 
-    float moveSpeed = 10.0f;
+    float moveSpeed = 0.2f;
 
 	void Start () {
+        playerStatus = GetComponent<PlayerStatus>();
+        bonusManager = GameObject.Find("BonusManager").GetComponent<BonusManager>();
         angle = transform.eulerAngles;
         animator = GetComponent<Animator>();
 	}
 	
 	void Update () {
-        float z = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeed;
-
         //右矢印を押すと右を向いて進む
-        if (z > 0) {
+        if (bonusManager.RightClick) {
             angle.y = 90.0f;
             transform.eulerAngles = angle;
-            animator.SetBool("RunBool", true);
-            transform.position += transform.forward * z;
+            animator.SetBool("KnightRun", true);
+            transform.position += transform.forward * (moveSpeed + playerStatus.SpeedValue * 5 / 100);
         }
         //左矢印を押すと左を向いて進む
-        else if (z < 0) {
+        else if (bonusManager.LeftClick) {
             angle.y = -90.0f;
             transform.eulerAngles = angle;
-            animator.SetBool("RunBool", true);
-            transform.position -= transform.forward * z;
+            animator.SetBool("KnightRun", true);
+            transform.position += transform.forward * (moveSpeed + playerStatus.SpeedValue * 5 / 100); ;
         }
         else {
-            animator.SetBool("RunBool", false);
+            animator.SetBool("KnightRun", false);
         }
     }
 

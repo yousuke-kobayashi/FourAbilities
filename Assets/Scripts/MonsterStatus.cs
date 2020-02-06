@@ -22,7 +22,7 @@ public class MonsterStatus : MonoBehaviour {
     }
     
     public void MonsterInstantiate() {
-        monsterModel = new MonsterModel(20, 5, 1, 1);
+        monsterModel = new MonsterModel(20, 5, 1, 2);
     }
 
     public void BossInstantiate(int hp, int atk, int exp,int bp) {

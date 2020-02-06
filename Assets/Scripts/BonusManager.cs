@@ -16,7 +16,18 @@ public class BonusManager : MonoBehaviour {
     float timeLag = 0;
 
     void Awake() {
-        player = Instantiate(playerPrefab[0]) as GameObject;  //インスタンス化
+        if (MenuManager.Num() == 0) {
+            player = Instantiate(playerPrefab[0]) as GameObject;
+        }
+        else if (MenuManager.Num() == 1) {
+            player = Instantiate(playerPrefab[1]) as GameObject;
+        }
+        else if (MenuManager.Num() == 2) {
+            player = Instantiate(playerPrefab[2]) as GameObject;
+        }
+        else if (MenuManager.Num() == 3) {
+            player = Instantiate(playerPrefab[3]) as GameObject;
+        }
     }
 
     void Start () {
@@ -57,4 +68,21 @@ public class BonusManager : MonoBehaviour {
         yield return new WaitForSeconds(2);
         SceneManager.LoadScene("MenuScene");
     }
+
+    public void GetRightButtonDown() {
+        RightClick = true;
+    }
+    public void GetRightButtonUp() {
+        RightClick = false;
+    }
+
+    public void GetLeftButtonDown() {
+        LeftClick = true;
+    }
+    public void GetLeftButtonUp() {
+        LeftClick = false;
+    }
+
+    public bool RightClick { get; set; }
+    public bool LeftClick { get; set; }
 }

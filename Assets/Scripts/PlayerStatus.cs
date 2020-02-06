@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerStatus : MonoBehaviour {
     PlayerModel playerModel;
 
-    void Start () {
+    void Awake () {
         playerModel = PlayerModel.GetInstance();  //インスタンス化
         //次のレベルまでに必要な経験値＝レベル＊10＋レベル2乗
         NeedEXP = (playerModel.lv * 10 + (playerModel.lv * playerModel.lv)) / 2;

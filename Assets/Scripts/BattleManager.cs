@@ -19,7 +19,15 @@ public class BattleManager : MonoBehaviour {
     bool boss = false;
 
     void Awake() {
-        player = Instantiate(playerPrefab[0]) as GameObject;  //インスタンス化
+        if (MenuManager.Num() == 0) {
+            player = Instantiate(playerPrefab[0]) as GameObject;
+        } else if (MenuManager.Num() == 1) {
+            player = Instantiate(playerPrefab[1]) as GameObject;
+        } else if (MenuManager.Num() == 2) {
+            player = Instantiate(playerPrefab[2]) as GameObject;
+        } else if (MenuManager.Num() == 3) {
+            player = Instantiate(playerPrefab[3]) as GameObject;
+        }
     }
 
     void Start() {
@@ -35,7 +43,6 @@ public class BattleManager : MonoBehaviour {
     }
 
     void Update() {
-        //テキスト更新
         statusText.text =
             "LV" + playerStatus.Level +
             " HP" + Mathf.Clamp(playerStatus.HelthPoint, 0, playerStatus.MaxHelth) +
@@ -53,6 +60,7 @@ public class BattleManager : MonoBehaviour {
                 boss = false;
                 finishText.text = "VICTORY!";
                 StartCoroutine("BackMenuScene");
+                return;
             }
         }
 
@@ -78,9 +86,59 @@ public class BattleManager : MonoBehaviour {
 
     IEnumerator BackMenuScene() {
         yield return new WaitForSeconds(2);
-
         SceneManager.LoadScene("MenuScene");
     }
+
+    //ボタンを押した時の判定
+    //上ボタン
+    public void GetGoButtonDown() {
+        GoClick = true;
+    }
+    public void GetGoButtonUp() {
+        GoClick = false;
+    }
+    //下ボタン
+    public void GetBackButtonDown() {
+        BackClick = true;
+    }
+    public void GetBackButtonUp() {
+        BackClick = false;
+    }
+    //左ボタン
+    public void GetLeftButtonDown() {
+        LeftClick = true;
+    }
+    public void GetLeftButtonUp() {
+        LeftClick = false;
+    }
+    //右ボタン
+    public void GetRightButtonDown() {
+        RightClick = true;
+    }
+    public void GetRightButtonUp() {
+        RightClick = false;
+    }
+    //攻撃ボタン
+    public void GetAttackButtonDown() {
+        AttackClick = true;
+    }
+    public void GetAttackButtonUp() {
+        AttackClick = false;
+    }
+    //スキルボタン
+    public void GetSkillButtonDown() {
+        SkillClick = true;
+    }
+    public void GetSkillButtonUp() {
+        SkillClick = false;
+    }
+
+    public static bool GoClick { get; set; }
+    public static bool BackClick { get; set; }
+    public static bool LeftClick { get; set; }
+    public static bool RightClick { get; set; }
+    public static bool AttackClick { get; set; }
+    public static bool SkillClick { get; set; }
 
     public bool EndJudge() {
         if (end) return true;

@@ -25,7 +25,7 @@ public class MonsterGenerator : MonoBehaviour {
             timeLag -= Time.deltaTime;  //時間経過
             //スライムを生成
             if (timeLag <= 0) {
-                timeLag = 2.0f; //ラグリセット
+                timeLag = 4.0f; //ラグリセット
                 //前方から生成
                 GameObject slime1 = Instantiate(slimePrefab) as GameObject;
                 slime1.transform.position = new Vector3(Random.Range(-50, 50), 0, 50);

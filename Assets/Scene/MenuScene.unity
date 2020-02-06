@@ -696,6 +696,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab:
   - {fileID: 1461234999878680, guid: 6053f6d1132aed14a931bff09d93b77c, type: 2}
+  - {fileID: 1801481651772540, guid: bfefdaf28290a954db1f1b52eeaf7928, type: 2}
+  - {fileID: 1909572497237948, guid: c520f39edb3f0e34eb694b08da45b15c, type: 2}
+  - {fileID: 1507977534505814, guid: 230a1a412ed1d0042bace3927aae075f, type: 2}
   lvText: {fileID: 604821988}
   hpText: {fileID: 891396590}
   atkText: {fileID: 892447555}
@@ -704,7 +707,6 @@ MonoBehaviour:
   spText: {fileID: 28324873}
   bpText: {fileID: 570996563}
   bossButton: {fileID: 1037905572}
-  bossManager: {fileID: 0}
 --- !u!4 &781603704
 Transform:
   m_ObjectHideFlags: 0
