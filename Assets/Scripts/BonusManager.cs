@@ -9,15 +9,24 @@ public class BonusManager : MonoBehaviour {
     public Text statusText;
     public Text bpText;
     public Text finishText;
+    public Text mpText;
+    public Slider slider;
+    public Button skillButton;
+    public Color color1;
+    public Color color2;
 
     GameObject player;
     PlayerStatus playerStatus;
+    Image button;
 
+    int mp = 0;
+    int maxMp = 10;
+    float mpCountTime;
     float timeLag = 0;
 
     void Awake() {
         //能力に応じてPlayerを生成
-        if (MenuManager.Num() == 0) {
+        /*if (MenuManager.Num() == 0) {
             player = Instantiate(playerPrefab[0]) as GameObject;
         }
         else if (MenuManager.Num() == 1) {
@@ -28,11 +37,13 @@ public class BonusManager : MonoBehaviour {
         }
         else if (MenuManager.Num() == 3) {
             player = Instantiate(playerPrefab[3]) as GameObject;
-        }
+        }*/
+        player = Instantiate(playerPrefab[0]) as GameObject;
     }
 
     void Start () {
         playerStatus = player.GetComponent<PlayerStatus>();
+        button = skillButton.GetComponentInChildren<Image>();
     }
 
     void Update () {
@@ -58,9 +69,40 @@ public class BonusManager : MonoBehaviour {
             playerStatus.BonusPoint--;
         }
 
+        //BPがなくなったら、MenuSceneへ遷移
         if (playerStatus.BonusPoint <= 0) {
             StartCoroutine("BackMenuScene");
         }
+
+        //最大MPになるまで0.5秒間隔でMPを増やす
+        if (mpCountTime <= 0 && mp < maxMp) {
+            mp++;
+            mpCountTime = 0.5f;
+        }
+        else {
+            mpCountTime -= Time.deltaTime;
+        }
+
+        //MPゲージの更新
+        if (mp == 10) {
+            slider.value = 10;
+
+            skillButton.interactable = true;
+            button.color = color2;
+        }
+        else {
+            slider.value = mp;
+
+            skillButton.interactable = false;
+            button.color = color1;
+        }
+
+        mpText.text = "MP" + mp;
+    }
+
+    public void ConsumeMP() {
+        mp = 0;
+        mpCountTime = 0.5f;
     }
 
     IEnumerator BackMenuScene() {
@@ -84,6 +126,18 @@ public class BonusManager : MonoBehaviour {
         LeftClick = false;
     }
 
+    public void GetSkillButtonDown() {
+        SkillClick = true;
+    }
+    public void GetSkillButtonUp() {
+        SkillClick = false;
+    }
+
     public bool RightClick { get; set; }
     public bool LeftClick { get; set; }
+    public bool SkillClick { get; set; }
+
+    public int MP {
+        get { return mp; }
+    }
 }

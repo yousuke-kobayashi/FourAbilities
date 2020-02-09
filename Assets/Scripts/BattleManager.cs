@@ -5,21 +5,34 @@ using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour {
     public GameObject[] playerPrefab;
+    public AudioClip bgm;
+    public AudioClip bossBgm;
     public Text statusText;
     public Text bpText;
     public Text timeText;
     public Text finishText;
+    public Text mpText;
+    public Slider slider;
+    public Button skillButton;
+    public Color color1;
+    public Color color2;
+
     public float limitTime;  //制限時間
 
     PlayerStatus playerStatus;
     GameObject player;
+    AudioSource audioSource;
+    Image button;
 
+    int mp = 0;
+    int maxMp = 10;
+    float mpCountTime;
     float time;  //残り時間
     bool end = false;
     bool boss = false;
 
     void Awake() {
-        /*if (MenuManager.Num() == 0) {
+        if (MenuManager.Num() == 0) {
             player = Instantiate(playerPrefab[0]) as GameObject;
         } else if (MenuManager.Num() == 1) {
             player = Instantiate(playerPrefab[1]) as GameObject;
@@ -27,20 +40,26 @@ public class BattleManager : MonoBehaviour {
             player = Instantiate(playerPrefab[2]) as GameObject;
         } else if (MenuManager.Num() == 3) {
             player = Instantiate(playerPrefab[3]) as GameObject;
-        }*/
-        player = Instantiate(playerPrefab[0]) as GameObject;
+        }
+        //player = Instantiate(playerPrefab[0]) as GameObject;
     }
 
     void Start() {
         playerStatus = player.GetComponent<PlayerStatus>();
+        audioSource = GetComponent<AudioSource>();
+        button = skillButton.GetComponentInChildren<Image>();
 
+        //ボス戦の場合
         if (MenuManager.FirstBossAlive) {
             boss = true;
+            audioSource.PlayOneShot(bossBgm);
             return;
         }
 
-        timeText.text = limitTime.ToString("F2");
-        time = limitTime;
+        audioSource.PlayOneShot(bgm);
+
+        time = limitTime + playerStatus.Level;
+        timeText.text = time.ToString("F2");
     }
 
     void Update() {
@@ -58,7 +77,7 @@ public class BattleManager : MonoBehaviour {
         if (boss) {
             if (!MenuManager.FirstBossAlive) {
                 end = true;
-                boss = false;
+                //boss = false;
                 finishText.text = "VICTORY!";
                 StartCoroutine("BackMenuScene");
                 return;
@@ -72,6 +91,30 @@ public class BattleManager : MonoBehaviour {
             StartCoroutine("BackMenuScene");
         }
 
+        //最大MPになるまで2.0秒間隔でMPを増やす
+        if (mpCountTime <= 0 && mp < maxMp) {
+            mp++;
+            mpCountTime = 2.0f;
+        }
+        else {
+            mpCountTime -= Time.deltaTime;
+        }
+
+        //MPゲージの更新
+        if (mp == 10) {
+            slider.value = 10;
+
+            skillButton.interactable = true;
+            button.color = color2;
+        } else {
+            slider.value = mp;
+
+            skillButton.interactable = false;
+            button.color = color1;
+        }
+
+        mpText.text = "MP" + mp;
+
         if (boss) return;　//ボス戦は時間制限なし
 
         //残り時間0でMenuSceneに遷移
@@ -82,7 +125,12 @@ public class BattleManager : MonoBehaviour {
         }
 
         time -= Time.deltaTime;　//時間経過
-        timeText.text = Mathf.Clamp(time, 0, limitTime + 1).ToString("F2");
+        timeText.text = Mathf.Clamp(time, 0, limitTime + playerStatus.Level).ToString("F2");
+    }
+
+    public void ConsumeMP() {
+        mp = 0;
+        mpCountTime = 2.0f;
     }
 
     IEnumerator BackMenuScene() {
@@ -134,12 +182,16 @@ public class BattleManager : MonoBehaviour {
         SkillClick = false;
     }
 
-    public static bool GoClick { get; set; }
-    public static bool BackClick { get; set; }
-    public static bool LeftClick { get; set; }
-    public static bool RightClick { get; set; }
-    public static bool AttackClick { get; set; }
-    public static bool SkillClick { get; set; }
+    public bool GoClick { get; set; }
+    public bool BackClick { get; set; }
+    public bool LeftClick { get; set; }
+    public bool RightClick { get; set; }
+    public bool AttackClick { get; set; }
+    public bool SkillClick { get; set; }
+
+    public int MP {
+        get { return mp; }
+    }
 
     public bool EndJudge() {
         if (end) return true;

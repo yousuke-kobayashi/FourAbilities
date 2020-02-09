@@ -159,6 +159,7 @@ GameObject:
   - component: {fileID: 135458402265888670}
   - component: {fileID: 114740619970285872}
   - component: {fileID: 114275507458249296}
+  - component: {fileID: 82253375115751952}
   m_Layer: 0
   m_Name: TurtlePrefab
   m_TagString: Monster
@@ -953,13 +954,93 @@ Rigidbody:
   m_GameObject: {fileID: 1210513320197966}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 5
-  m_AngularDrag: 20
+  m_Drag: 20
+  m_AngularDrag: 100
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!82 &82253375115751952
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1210513320197966}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.03
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &95156596647666224
 Animator:
   serializedVersion: 3
@@ -999,6 +1080,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8e21df46a9048f44889bde619d35a9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageEffect: {fileID: 1485714980984716, guid: a10a009f493143142a43e63e26c7de02,
+    type: 2}
+  attack: {fileID: 8300000, guid: 5d886a3324359fe45bcc53b26ed91259, type: 3}
+  slash: {fileID: 8300000, guid: e924a2287f26e2b45ad22035bb1dc580, type: 3}
+  bang: {fileID: 8300000, guid: 5b6410a89a314064290209afb1460982, type: 3}
+  sting: {fileID: 8300000, guid: a1ba6afb20e08b74a847f04c4b661db1, type: 3}
 --- !u!135 &135458402265888670
 SphereCollider:
   m_ObjectHideFlags: 1

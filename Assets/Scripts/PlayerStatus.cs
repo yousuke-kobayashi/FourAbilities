@@ -10,6 +10,9 @@ public class PlayerStatus : MonoBehaviour {
         NeedEXP = (playerModel.lv * 10 + (playerModel.lv * playerModel.lv)) / 2;
     }
 
+    void Start() {
+    }
+
     void Update()　{
         if (playerModel.exp >= NeedEXP)　{
             playerModel.exp -= NeedEXP;  //経験値を繰り越す
@@ -20,11 +23,12 @@ public class PlayerStatus : MonoBehaviour {
         }
     }
 
-    public bool StatusOver(int under) {
-        if (playerModel.atk >= under &&
-            playerModel.def >= under &&
-            playerModel.mag >= under &&
-            playerModel.sp >= under)
+    //１つの能力が最低値を上回っているかどうか
+    public bool StatusOver(int num) {
+        if (playerModel.atk >= num ||
+            playerModel.def >= num ||
+            playerModel.mag >= num ||
+            playerModel.sp >= num)
         {
             return true;
         }

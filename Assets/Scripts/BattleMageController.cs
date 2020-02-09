@@ -5,19 +5,23 @@ public class BattleMageController : MonoBehaviour {
     public GameObject iceBombPrefab;
     public GameObject staff;
     public GameObject flameBurstPrefab;
+    public GameObject skillPos;
+    public AudioClip skill;
 
     PlayerStatus playerStatus;
     BattleManager battleManager;
     Animator animator;
+    AudioSource audioSource;
     Transform pos;
 
-    float moveSpeed = 0.9f;  //前進速度
+    public float moveSpeed;  //前進速度
     float angleSpeed = 100.0f;　//回転速度
 
     void Start() {
         playerStatus = GetComponent<PlayerStatus>();
         battleManager = GameObject.Find("BattleManager").GetComponent<BattleManager>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
 
         pos = staff.GetComponent<Transform>();
     }
@@ -31,42 +35,45 @@ public class BattleMageController : MonoBehaviour {
         }
 
         //前進
-        if (BattleManager.GoClick) {
+        if (battleManager.GoClick) {
             animator.SetBool("MageRun", true);
             animator.SetBool("MageBack", false);
-            transform.position += transform.forward * Time.deltaTime * (moveSpeed + playerStatus.SpeedValue * 5 / 100);
+            transform.position += transform.forward * Time.deltaTime * (moveSpeed + playerStatus.SpeedValue * 0.02f);
         }
-        if (!BattleManager.GoClick) {
+        if (!battleManager.GoClick) {
             animator.SetBool("MageRun", false);
         }
         //後退
       
-          if (BattleManager.BackClick){
+          if (battleManager.BackClick){
             animator.SetBool("MageBack", true);
             animator.SetBool("MageRun", false);
-            transform.position -= transform.forward * 0.7f * Time.deltaTime * (moveSpeed + playerStatus.SpeedValue * 5 / 100);
+            transform.position -= transform.forward * 0.7f * Time.deltaTime * (moveSpeed + playerStatus.SpeedValue * 0.02f);
         }
-        if (!BattleManager.BackClick) {
+        if (!battleManager.BackClick) {
             animator.SetBool("MageBack", false);
         }
         //左回転
-        if (BattleManager.LeftClick) {
+        if (battleManager.LeftClick) {
             transform.Rotate(Vector3.up * -angleSpeed * Time.deltaTime);
         }
         //右回転
-        if (BattleManager.RightClick) {
+        if (battleManager.RightClick) {
             transform.Rotate(Vector3.up * angleSpeed * Time.deltaTime);
         }
         //攻撃
-        if (BattleManager.AttackClick && !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")) {
+        if (battleManager.AttackClick && !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")) {
             animator.SetTrigger("MageAttackTrigger");
         }
         //スキル
-        if (BattleManager.SkillClick &&
+        if (battleManager.MP >= 10 &&
+            battleManager.SkillClick &&
             !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") &&
             !animator.GetCurrentAnimatorStateInfo(0).IsName("Skill"))
         {
             animator.SetTrigger("MageSkillTrigger");
+            audioSource.PlayOneShot(skill);
+            battleManager.ConsumeMP();
         }
     }
 
@@ -79,7 +86,7 @@ public class BattleMageController : MonoBehaviour {
 
     public void SkillHit() {
         GameObject flameBurst = Instantiate(flameBurstPrefab) as GameObject;
-        flameBurst.transform.position = new Vector3(transform.position.x, 1, transform.position.z + 10);
+        flameBurst.transform.position = skillPos.transform.position;
     }
 
     public void FootR() { }  //AnimationEvent

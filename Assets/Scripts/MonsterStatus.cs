@@ -21,21 +21,55 @@ public class MonsterStatus : MonoBehaviour {
         Distance = Vector3.Distance(target.position, transform.position);
     }
     
-    public void MonsterInstantiate() {
+    public void SlimeInstantiate() {
         monsterModel = new MonsterModel(20, 5, 1, 2);
+    }
+
+    public void TurtleInstantiate() {
+        monsterModel = new MonsterModel(100, 15, 3, 5);
     }
 
     public void BossInstantiate(int hp, int atk, int exp,int bp) {
         monsterModel = new MonsterModel(hp, atk, exp, bp);
     }
+    
+    public void PlayerHelthDecrease() {
+        playerStatus.HelthPoint -= Mathf.Clamp(monsterModel.atk - playerStatus.DeffenceValue / 5, 1, 999);
+    }
 
-    public void MonsterHelthDecrease() {
+    //ナイトの攻撃＝攻撃力
+    //ナイトのスキル＝攻撃力＋魔力＊0.2
+    public void KnightAttack() {
         monsterModel.hp -= playerStatus.AttackValue;
     }
-
-    public void PlayerHelthDecrease() {
-        playerStatus.HelthPoint -= Mathf.Clamp(monsterModel.atk - playerStatus.DeffenceValue * 2 / 10, 1, 999);
+    public void KnightSkill() {
+        monsterModel.hp -= (playerStatus.AttackValue + playerStatus.MagicValue / 5);
     }
+    //バーサーカーの攻撃＝攻撃力＊1.5
+    //バーサーカーのスキル＝攻撃力＋防御力/2＋スタン
+    public void BerserkerAttack() {
+        monsterModel.hp -= playerStatus.AttackValue * 3 / 2;
+    }
+    public void BerserkerSkill() {
+        monsterModel.hp -= playerStatus.AttackValue + playerStatus.DeffenceValue / 2;
+    }
+    //メイジの攻撃＝魔力＋攻撃力＊0.2
+    //メイジのスキル＝魔力＊2
+    public void MageAttack() {
+        monsterModel.hp -= playerStatus.MagicValue + playerStatus.AttackValue / 5;
+    }
+    public void MageSkill() {
+        monsterModel.hp -= playerStatus.MagicValue * 2;
+    }
+    //アーチャーの攻撃＝攻撃力/2＋素早さ/2
+    //アーチャーのスキル＝素早さ＋魔力0.2＋吹き飛ばし
+    public void ArcherAttack() {
+        monsterModel.hp -= playerStatus.AttackValue / 2 + playerStatus.SpeedValue / 2;
+    }
+    public void ArcherSkill() {
+        monsterModel.hp -= playerStatus.SpeedValue + playerStatus.MagicValue / 5;
+    }
+
 
     //撃破時、経験値とBPを加算
     public void Defeat() {

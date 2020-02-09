@@ -3,12 +3,14 @@ using UnityEngine;
 
 public class ArrowController : MonoBehaviour {
 
+    public float speed;
+
 	void Start () {
 		
 	}
 	
 	void Update () {
-        transform.position += transform.forward * Time.deltaTime * 25;
+        transform.position += transform.forward * Time.deltaTime * speed;
 	}
 
     public void OnTriggerEnter(Collider other) {

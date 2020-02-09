@@ -11,8 +11,9 @@ public class BallController : MonoBehaviour {
     }
 
     //ボールを取ったら各能力が上昇
-    public void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.tag == "Player") {
+    public void OnTriggerEnter(Collider other) {
+        if (other.gameObject.tag == "Player") {
+
             if (tag == "BallRed") {
                 playerStatus.AttackValue++;
             }
@@ -27,8 +28,8 @@ public class BallController : MonoBehaviour {
             }
         }
 
-        if (collision.gameObject.tag == "Player" ||
-            collision.gameObject.tag == "Floor")
+        if (other.gameObject.tag == "Player" ||
+            other.gameObject.tag == "Floor")
         {
             Destroy(this.gameObject);
         }

@@ -63,7 +63,9 @@ public class MenuManager : MonoBehaviour {
         bpText.text = "BP " + playerStatus.BonusPoint;
 
         //全ステータスが一定値を超えていたらBossButtonを有効化
-        if (playerStatus.StatusOver(30)) {
+        if (playerStatus.StatusOver(30) &&
+            !FirstBossDead)
+        {
             bossButton.interactable = true;
         }
         else {
@@ -100,4 +102,5 @@ public class MenuManager : MonoBehaviour {
     }
 
     public static bool FirstBossAlive { get; set; }
+    public static bool FirstBossDead { get; set; }
 }

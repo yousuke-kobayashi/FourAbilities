@@ -18,10 +18,10 @@ public class PlayerModel {
         exp = 0;
         maxHp = 100;
         hp = maxHp;
-        atk = 10;
-        def = 10;
-        mag = 10;
-        sp = 10;
-        bp = 0;
+        atk = 30;
+        def = 30;
+        mag = 30;
+        sp = 30;
+        bp = 10;
     }
 }

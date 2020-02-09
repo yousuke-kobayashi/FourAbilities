@@ -2,19 +2,25 @@
 using UnityEngine;
 
 public class BattleBerserkerController : MonoBehaviour {
+    public AudioClip attack;
+    public AudioClip skill;
+    public GameObject skillEffect;
+
     PlayerStatus playerStatus;
     BattleManager battleManager;
     Animator animator;
+    AudioSource audioSource;
     GameObject attackArea;
     GameObject skillArea;
 
-    float moveSpeed = 1.0f;  //前進速度
+    public float moveSpeed;  //前進速度
     float angleSpeed = 100.0f;　//回転速度
 
     void Start() {
         playerStatus = GetComponent<PlayerStatus>();
         battleManager = GameObject.Find("BattleManager").GetComponent<BattleManager>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
         attackArea = GameObject.Find("AttackArea");
         skillArea = GameObject.Find("SkillArea");
 
@@ -31,45 +37,48 @@ public class BattleBerserkerController : MonoBehaviour {
         }
 
         //前進
-        if (BattleManager.GoClick) {
+        if (battleManager.GoClick) {
             animator.SetBool("BerserkerRun", true);
             animator.SetBool("BerserkerBack", false);
-            transform.position += transform.forward * Time.deltaTime * (moveSpeed + playerStatus.SpeedValue * 5 / 100);
+            transform.position += transform.forward * Time.deltaTime * (moveSpeed + playerStatus.SpeedValue * 0.01f);
         }
-        if (!BattleManager.GoClick) {
+        if (!battleManager.GoClick) {
             animator.SetBool("BerserkerRun", false);
         }
         //後退
-        if (BattleManager.BackClick) {
+        if (battleManager.BackClick) {
             animator.SetBool("BerserkerBack", true);
             animator.SetBool("BerserkerRun", false);
-            transform.position -= transform.forward * 0.7f * Time.deltaTime * (moveSpeed + playerStatus.SpeedValue * 5 / 100);
+            transform.position -= transform.forward * 0.7f * Time.deltaTime * (moveSpeed + playerStatus.SpeedValue * 0.01f);
         }
-        if (!BattleManager.BackClick) {
+        if (!battleManager.BackClick) {
             animator.SetBool("BerserkerBack", false);
         }
         //左回転
-        if (BattleManager.LeftClick) {
+        if (battleManager.LeftClick) {
             transform.Rotate(Vector3.up * -angleSpeed * Time.deltaTime);
         }
         //右回転
-        if (BattleManager.RightClick) {
+        if (battleManager.RightClick) {
             transform.Rotate(Vector3.up * angleSpeed * Time.deltaTime);
         }
         //攻撃
-        if (BattleManager.AttackClick && !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")) {
+        if (battleManager.AttackClick && !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")) {
             animator.SetTrigger("BerserkerAttackTrigger");
         }
         //スキル
-        if (BattleManager.SkillClick &&
+        if (battleManager.MP >= 10 &&
+            battleManager.SkillClick &&
             !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") &&
             !animator.GetCurrentAnimatorStateInfo(0).IsName("Skill"))
         {
             animator.SetTrigger("BerserkerSkillTrigger");
+            battleManager.ConsumeMP();
         }
     }
 
     public void Hit() {  //AnimationEvent
+        audioSource.PlayOneShot(attack);
         attackArea.SetActive(true);
     }
     public void HitOut() {  //AnimationEvent
@@ -77,7 +86,11 @@ public class BattleBerserkerController : MonoBehaviour {
     }
 
     public void SkillHit() {
+        audioSource.PlayOneShot(skill);
         skillArea.SetActive(true);
+        GameObject effect = Instantiate(skillEffect) as GameObject;
+        effect.transform.position = skillArea.transform.position;
+        effect.transform.rotation = Quaternion.Euler(new Vector3(0, transform.localEulerAngles.y, 0));
     }
     public void SkillHitOut() {
         skillArea.SetActive(false);

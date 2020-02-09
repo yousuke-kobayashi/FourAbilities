@@ -566,6 +566,7 @@ GameObject:
   - component: {fileID: 114110676351045104}
   - component: {fileID: 114414597731770512}
   - component: {fileID: 136464566875236186}
+  - component: {fileID: 82745135930048246}
   m_Layer: 0
   m_Name: SkeletonPrefab
   m_TagString: Monster
@@ -1197,6 +1198,86 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!82 &82745135930048246
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1940205758592824}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &95502593524441300
 Animator:
   serializedVersion: 3
@@ -1225,6 +1306,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0368fdb03a5e1c749b7def70f3d983e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageEffect: {fileID: 1485714980984716, guid: cf8863b65d43db54e84fbb638405a3d7,
+    type: 2}
+  attack: {fileID: 8300000, guid: cf17d45b375701f47a0035942b9458cd, type: 3}
+  slash: {fileID: 8300000, guid: e924a2287f26e2b45ad22035bb1dc580, type: 3}
+  bang: {fileID: 8300000, guid: 5b6410a89a314064290209afb1460982, type: 3}
+  sting: {fileID: 8300000, guid: a1ba6afb20e08b74a847f04c4b661db1, type: 3}
 --- !u!114 &114414597731770512
 MonoBehaviour:
   m_ObjectHideFlags: 1
